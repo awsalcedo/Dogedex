@@ -1,7 +1,10 @@
-package com.asalcedo.dogedex
+package com.asalcedo.dogedex.doglist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.asalcedo.dogedex.Dog
+import com.asalcedo.dogedex.R
 import com.asalcedo.dogedex.databinding.ActivityDogListBinding
 
 class DogListActivity : AppCompatActivity() {
@@ -9,10 +12,16 @@ class DogListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityDogListBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_dog_list)
+        setContentView(binding.root)
 
         val dogList = getFakeDogs()
+
         val recycler = binding.dogRecycler
+        recycler.layoutManager = LinearLayoutManager(this)
+
+        val adapter = DogAdapter()
+        recycler.adapter = adapter
+        adapter.submitList(dogList)
     }
 
     private fun getFakeDogs(): MutableList<Dog> {
