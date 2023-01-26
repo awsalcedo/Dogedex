@@ -6,6 +6,7 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.asalcedo.dogedex.Dog
 import com.asalcedo.dogedex.databinding.DogListItemBinding
 
@@ -44,11 +45,12 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
         RecyclerView.ViewHolder(binding.root) {
         //La clase ViewHolder sirve para pintar, en este caso los perros
         fun bind(dog: Dog) {
-            binding.dogName.text = dog.name
-            //Permite menjar el click sobre cada uno de los perros
-            binding.dogName.setOnClickListener {
+            //Permite manejar el click sobre cada uno de los perros
+            binding.dogListItemLayout.setOnClickListener {
                 onItemClickListener?.invoke(dog)
             }
+
+            binding.dogImage.load(dog.imageUrl)
         }
     }
 }
