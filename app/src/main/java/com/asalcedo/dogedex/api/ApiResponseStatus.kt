@@ -1,11 +1,8 @@
 package com.asalcedo.dogedex.api
 
-import com.asalcedo.dogedex.Dog
-
-sealed class ApiResponseStatus() {
-
-    class Success(val dogList: List<Dog>) : ApiResponseStatus()
-    class Loading() : ApiResponseStatus()
-    class Error(val messageId: Int) : ApiResponseStatus()
+sealed class ApiResponseStatus<T>() {
+    class Success<T>(val data: T) : ApiResponseStatus<T>()
+    class Loading<T>() : ApiResponseStatus<T>()
+    class Error<T>(val messageId: Int) : ApiResponseStatus<T>()
 
 }
