@@ -2,6 +2,7 @@ package com.asalcedo.dogedex.doglist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,11 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
 
     }
 
+    private var onItemClickListener: ((Dog) -> Unit)? = null
+    fun setOnItemClickListener(onItemClickListener: (Dog) -> Unit) {
+        this.onItemClickListener = onItemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
         //Inflar el binding y pasarle al ViewHolder
         val binding = DogListItemBinding.inflate(LayoutInflater.from(parent.context))
@@ -39,6 +45,10 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
         //La clase ViewHolder sirve para pintar, en este caso los perros
         fun bind(dog: Dog) {
             binding.dogName.text = dog.name
+            //Permite menjar el click sobre cada uno de los perros
+            binding.dogName.setOnClickListener {
+                onItemClickListener?.invoke(dog)
+            }
         }
     }
 }
